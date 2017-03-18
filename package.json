@@ -1,0 +1,24 @@
+{
+  "name": "anydo",
+  "version": "0.1.0",
+  "description": "Unofficial Anydo client for Node.js.",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard --fix"
+  },
+  "keywords": [],
+  "author": "Mark Tiedemann <www.marktiedemann@gmail.com>",
+  "license": "WTFPL",
+  "devDependencies": {
+    "standard": "^9.0.2"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkTiedemann/anydo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MarkTiedemann/anydo/issues"
+  },
+  "homepage": "https://github.com/MarkTiedemann/anydo"
+}
