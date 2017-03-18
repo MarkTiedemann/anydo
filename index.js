@@ -1,5 +1,7 @@
 const https = require('https')
+const x = require('throw-if-missing')
 const schema = require('./schema')
+const noop = () => {}
 
 const request = (options, callback) => {
   const req = https.request(options, res => {
@@ -24,7 +26,11 @@ const parseBody = (res, callback) => {
   })
 }
 
-const login = ({ hostname, email, password }, callback) => {
+const login = ({
+  hostname = 'sm-prod2.any.do',
+  email = x`email`,
+  password = x`password`
+} = {}, callback = noop) => {
   request({
     hostname,
     path: '/login',
@@ -34,7 +40,13 @@ const login = ({ hostname, email, password }, callback) => {
   }, callback)
 }
 
-const sync = ({ hostname, updatedSince, includeDone, includeDeleted }, auth, callback) => {
+const sync = ({
+  hostname = 'sm-prod2.any.do',
+  updatedSince = 0,
+  includeDone = false,
+  includeDeleted = false,
+  auth = x`auth`
+} = {}, callback = noop) => {
   request({
     hostname,
     path: '/api/v2/me/sync?updatedSince=' + updatedSince,
@@ -47,29 +59,18 @@ const sync = ({ hostname, updatedSince, includeDone, includeDeleted }, auth, cal
   }, callback)
 }
 
-module.exports = (options = {}, callback = () => {}) => {
-  if (!options.email) throw new Error('Missing email option')
-  if (!options.password) throw new Error('Missing password option')
-
-  const defaultOptions = {
-    hostname: 'sm-prod2.any.do',
-    updatedSince: 0,
-    includeDone: false,
-    includeDeleted: false
-  }
-
-  const anydoOptions = Object.assign(defaultOptions, options)
-
-  login(anydoOptions, (err, res) => {
+const anydo = (options = {}, callback = noop) => {
+  login(options, (err, res) => {
     if (err) return callback(err)
+    options.auth = res.headers['x-anydo-auth']
 
-    const auth = res.headers['x-anydo-auth']
-    if (!auth) return callback(new Error('No auth token found'))
-
-    sync(anydoOptions, auth, (err, res) => {
+    sync(options, (err, res) => {
       if (err) return callback(err)
-
       parseBody(res, callback)
     })
   })
 }
+
+module.exports = anydo
+module.exports.login = login
+module.exports.sync = sync

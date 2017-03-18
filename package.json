@@ -1,6 +1,6 @@
 {
   "name": "anydo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Unofficial Any.do client for Node.js.",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,9 @@
   "devDependencies": {
     "standard": "^9.0.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "throw-if-missing": "^1.1.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MarkTiedemann/anydo.git"
