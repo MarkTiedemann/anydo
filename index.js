@@ -1,30 +1,8 @@
-const https = require('https')
 const x = require('throw-if-missing')
 const schema = require('./schema')
+const request = require('./lib/request')
+const parseBody = require('./lib/parse-body')
 const noop = () => {}
-
-const request = (options, callback) => {
-  const req = https.request(options, res => {
-    res.on('error', callback)
-    if (res.statusCode !== 200) callback(new Error(res.statusCode))
-    else callback(null, res)
-  })
-  req.on('error', callback)
-  req.end(JSON.stringify(options.body))
-}
-
-const parseBody = (res, callback) => {
-  const buffer = []
-  res.on('data', data => buffer.push(data))
-  res.on('end', () => {
-    try {
-      const body = Buffer.concat(buffer).toString()
-      callback(null, JSON.parse(body))
-    } catch (err) {
-      callback(err)
-    }
-  })
-}
 
 const login = ({
   hostname = 'sm-prod2.any.do',
