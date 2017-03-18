@@ -1,6 +1,6 @@
 # anydo
 
-**Unofficial Anydo client for Node.js.**
+**Unofficial [Any.do](https://www.any.do/) client for Node.js.**
 
 ## Installation
 
