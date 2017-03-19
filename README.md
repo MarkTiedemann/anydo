@@ -39,6 +39,10 @@ anydo(options, (err, result) => {
   - **includeDone** `<Boolean>`: default: `false`
   - **includeDeleted** `<Boolean>`: default: `false`
 
+## CLI
+
+**See: [anydo-cli](https://github.com/MarkTiedemann/anydo-cli).**
+
 ## License
 
 [WTFPL](http://www.wtfpl.net/) – Do What the F*ck You Want to Public License.
